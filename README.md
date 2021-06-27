@@ -1,3 +1,4 @@
+![CI workflow](https://github.com/dangerousmonk/yamdb_final/actions/workflows/yamdb_workflow.yml/badge.svg)
 # YaMDb
 ## Сервис для оценки произвдений
 
