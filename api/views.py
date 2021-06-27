@@ -1,39 +1,42 @@
-from django.db.models import Avg
-from django.shortcuts import get_object_or_404
+from django.conf.global_settings import EMAIL_HOST_USER
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import send_mail
-from django.conf.global_settings import EMAIL_HOST_USER
-from rest_framework import filters, mixins, permissions, viewsets
-from rest_framework.decorators import (
-    action, api_view, permission_classes
-)
-from rest_framework.response import Response
-from rest_framework.status import (
-    HTTP_400_BAD_REQUEST, HTTP_201_CREATED, HTTP_200_OK
-)
-from rest_framework_simplejwt.tokens import RefreshToken
+from django.db.models import Avg
+from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import filters
+from rest_framework import mixins
+from rest_framework import permissions
+from rest_framework import viewsets
+from rest_framework.decorators import action
+from rest_framework.decorators import api_view
+from rest_framework.decorators import permission_classes
+from rest_framework.response import Response
+from rest_framework.status import HTTP_200_OK
+from rest_framework.status import HTTP_201_CREATED
+from rest_framework.status import HTTP_400_BAD_REQUEST
+from rest_framework_simplejwt.tokens import RefreshToken
 
 from .filters import TitleFilter
-from .models import Category, Genre, Title, Review, User
-from .permissions import (
-    IsAdminOrReadOnly,
-    UserIsOwnerOrModeratorOrReadOnly,
-    IsAdminOrDenied,
-    PutNotAllowed,
-)
-from .serializers import (
-    CategorySerializer,
-    GenreSerializer,
-    TitleReadSerializer,
-    TitleWriteSerializer,
-    ReviewSerializer,
-    CommentSerializer,
-    UserSerializer,
-    EmailSerializer,
-    EmailConfirmationCodeSerializer,
-    AdminSerializer
-)
+from .models import Category
+from .models import Genre
+from .models import Review
+from .models import Title
+from .models import User
+from .permissions import IsAdminOrDenied
+from .permissions import IsAdminOrReadOnly
+from .permissions import PutNotAllowed
+from .permissions import UserIsOwnerOrModeratorOrReadOnly
+from .serializers import AdminSerializer
+from .serializers import CategorySerializer
+from .serializers import CommentSerializer
+from .serializers import EmailConfirmationCodeSerializer
+from .serializers import EmailSerializer
+from .serializers import GenreSerializer
+from .serializers import ReviewSerializer
+from .serializers import TitleReadSerializer
+from .serializers import TitleWriteSerializer
+from .serializers import UserSerializer
 
 
 class CustomViewSet(

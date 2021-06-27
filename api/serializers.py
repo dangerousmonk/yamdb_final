@@ -2,7 +2,7 @@ from django.contrib.auth.tokens import default_token_generator
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 
-from .models import Category, Genre, Title, Review, Comment, User
+from .models import Category, Comment, Genre, Review, Title, User
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -106,7 +106,6 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class AdminSerializer(serializers.ModelSerializer):
-
     """
     Allow admins to set/change roles for users
     """
