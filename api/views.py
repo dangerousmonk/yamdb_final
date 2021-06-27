@@ -4,7 +4,6 @@ from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import send_mail
 from django.conf.global_settings import EMAIL_HOST_USER
 from rest_framework import filters, mixins, permissions, viewsets
-
 from rest_framework.decorators import (
     action, api_view, permission_classes
 )
@@ -14,7 +13,6 @@ from rest_framework.status import (
 )
 from rest_framework_simplejwt.tokens import RefreshToken
 from django_filters.rest_framework import DjangoFilterBackend
-
 
 from .filters import TitleFilter
 from .models import Category, Genre, Title, Review, User

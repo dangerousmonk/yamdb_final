@@ -1,5 +1,4 @@
 from django.contrib.auth.tokens import default_token_generator
-
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 
