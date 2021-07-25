@@ -1,7 +1,7 @@
 ![CI workflow](https://github.com/dangerousmonk/yamdb_final/actions/workflows/yamdb_workflow.yml/badge.svg)
 # YaMDb
 ## Сервис для оценки произведений пользователями.
-## http://dangerousmonk.hopto.org/api/v1/
+
 
 Проект **YaMDb** собирает отзывы (**Review**) пользователей на произведения (**Title**). Произведения делятся на категории: **«Книги», «Фильмы», «Музыка»**. Список категорий (**Category**) может быть расширен.
 
