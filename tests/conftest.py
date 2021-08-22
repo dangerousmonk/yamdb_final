@@ -6,4 +6,5 @@ sys.path.append(root_dir)
 
 
 pytest_plugins = [
+    'tests.fixtures.fixture_user',
 ]

@@ -1,20 +1,21 @@
-from django.contrib.auth.tokens import default_token_generator
+from django.contrib.auth import get_user_model
 from rest_framework import serializers
-from rest_framework.validators import UniqueValidator
 
-from .models import Category, Comment, Genre, Review, Title, User
+from .models import Category, Comment, Genre, Review, Title
+
+User = get_user_model()
 
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        exclude = ['id']
+        fields = ['name', 'slug']
 
 
 class GenreSerializer(serializers.ModelSerializer):
     class Meta:
         model = Genre
-        exclude = ['id']
+        fields = ['name', 'slug']
 
 
 class TitleReadSerializer(serializers.ModelSerializer):
@@ -23,8 +24,17 @@ class TitleReadSerializer(serializers.ModelSerializer):
     rating = serializers.FloatField()
 
     class Meta:
-        fields = '__all__'
         model = Title
+        fields = [
+            'id',
+            'name',
+            'year',
+            'description',
+            'genre',
+            'category',
+            'rating',
+            'year',
+        ]
 
 
 class TitleWriteSerializer(serializers.ModelSerializer):
@@ -36,8 +46,15 @@ class TitleWriteSerializer(serializers.ModelSerializer):
     )
 
     class Meta:
-        fields = '__all__'
         model = Title
+        fields = [
+            'id',
+            'name',
+            'year',
+            'description',
+            'genre',
+            'category',
+        ]
 
 
 class ReviewSerializer(serializers.ModelSerializer):
@@ -84,64 +101,3 @@ class CommentSerializer(serializers.ModelSerializer):
             'author',
             'pub_date'
         ]
-
-
-class UserSerializer(serializers.ModelSerializer):
-    username = serializers.CharField(
-        required=True,
-        validators=[UniqueValidator(queryset=User.objects.all())]
-    )
-    role = serializers.CharField(read_only=True)
-
-    class Meta:
-        model = User
-        fields = [
-            'first_name',
-            'last_name',
-            'username',
-            'bio',
-            'email',
-            'role'
-        ]
-
-
-class AdminSerializer(serializers.ModelSerializer):
-    """
-    Allow admins to set/change roles for users
-    """
-
-    username = serializers.CharField(
-        required=True,
-        validators=[UniqueValidator(queryset=User.objects.all())]
-    )
-
-    class Meta:
-        model = User
-        fields = [
-            'first_name',
-            'last_name',
-            'username',
-            'bio',
-            'email',
-            'role'
-        ]
-
-
-class EmailSerializer(serializers.Serializer):
-    email = serializers.EmailField(required=True)
-
-
-class EmailConfirmationCodeSerializer(serializers.Serializer):
-    email = serializers.EmailField(required=True)
-    confirmation_code = serializers.CharField(max_length=50, required=True)
-
-    def validate(self, data):
-        email = data['email']
-        code = data['confirmation_code']
-        try:
-            user = User.objects.get(email=email)
-        except User.DoesNotExist:
-            raise serializers.ValidationError('Unverified email')
-        if not default_token_generator.check_token(user, code):
-            raise serializers.ValidationError('Invalid confirmation code')
-        return data

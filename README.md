@@ -1,22 +1,24 @@
 ![CI workflow](https://github.com/dangerousmonk/yamdb_final/actions/workflows/yamdb_workflow.yml/badge.svg)
 # YaMDb
 ## Сервис для оценки произведений пользователями.
-## http://dangerousmonk.hopto.org/api/v1/
 
 Проект **YaMDb** собирает отзывы (**Review**) пользователей на произведения (**Title**). Произведения делятся на категории: **«Книги», «Фильмы», «Музыка»**. Список категорий (**Category**) может быть расширен.
 
-Читатели могут оставлять к произведениям текстовые отзывы (Review) и выставляют произведению рейтинг (оценку в диапазоне от одного до десяти). Из множества оценок автоматически высчитывается средняя оценка произведения.
-Техническое описание проекта YaMDb
+Пользователи могут оставлять к произведениям текстовые отзывы (Review) и выставляют произведению рейтинг (оценку в диапазоне от одного до десяти). Из множества оценок автоматически высчитывается средняя оценка произведения.
+
 
 ## Документация
-Описание и структуру API после запуска можно найти по адресу  `http://127.0.0.1/redoc/`
+Описание и структуру API после запуска можно найти по адресу  `http://127.0.0.1:8000/redoc/`
 При развертовании на боевом сервере укажите IP сервера или hostname для доступа к документации:
 `http://{{server_IP}}/redoc`
 
+## Схема БД
+![yamdbschema](https://user-images.githubusercontent.com/74264747/130362938-0454de8e-dfa4-49ed-b560-28831b326b7b.png)
+
 
 ## Технологии
-- Python 3.8
-- Django 3.0.5
+- Python 3.8.3
+- Django 3.1.7
 - PostgreSQL 12.4
 - Docker 20.10.5
 
@@ -24,10 +26,10 @@
 - Склонировать проект и перейти в папку проекта
 
 ```bash
-git clone https://github.com/dangerousmonk/infra_sp2
-cd infra_sp2
+git clone https://github.com/dangerousmonk/yamdb_final
+cd yamdb_final
 ```
-- Установить Python 3.8. в случае если он не установлен
+- Установить Python 3.8.3 в случае если он не установлен
 - Установить и активировать виртуальное окружение, или создать новый проект в PyCharm
 
 ```bash
@@ -72,13 +74,18 @@ python manage.py runserver
 
 - Создать и сохранить переменные окружения в **.env** файл, образец ниже
 ```bash
-DB_ENGINE=django.db.backends.postgresql
 DB_NAME=yamdb
 POSTGRES_USER=user
 POSTGRES_PASSWORD=12345
 POSTGRES_DB=yamdb #имя БД которое возьмет образ postgres
 DB_HOST=db
 DB_PORT=5432
+EMAIL_USE_TLS=True/False
+EMAIL_HOST=smtp.gmail.com
+EMAIL_PORT=587
+EMAIL_HOST_USER=youruser@gmail.com
+EMAIL_HOST_PASSWORD=secretpassword
+DEBUG=False/True
 ```
 
 - Запустить docker-compose
@@ -98,8 +105,4 @@ docker-compose exec web python manage.py collectstatic --noinput
 ```bash
 docker-compose exec web python manage.py createsuperuser
 ```
-- Для отладки заполнить базу тестовыми данными
 
-```bash
-docker-compose exec web python manage.py loaddata fixtures.json
-```
